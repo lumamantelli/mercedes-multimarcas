@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  nome      String
+  senha     String
+  telefone  String     @default("66999999999")
+  endereco  String?
+  cidade    String     @default("Sorriso")
+  estado    String     @default("MT")
+  fotoUrl   String?
+  carros    Carro[]
+  motos     Moto[]
+  caminhoes Caminhao[]
+  maquinas  Maquina[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model ImagemVeiculo {
+  id         String    @id @default(uuid())
+  url        String
+  carroId    String?
+  carro      Carro?    @relation(fields: [carroId], references: [id])
+  motoId     String?
+  moto       Moto?     @relation(fields: [motoId], references: [id])
+  caminhaoId String?
+  caminhão  Caminhao? @relation(fields: [caminhaoId], references: [id])
+  maquinaId  String?
+  maquina    Maquina?  @relation(fields: [maquinaId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Carro {
+  id            String          @id @default(uuid())
+  marca         String
+  modelo        String
+  ano           Int
+  cidade        String
+  estado        String
+  quilometragem Int
+  cor           String
+  combustivel   String
+  motor         String
+  tracao        String
+  cambio        String
+  cabine        String
+  fplaca        String
+  ipva          String
+  licenciamento String
+  revisoes      String
+  preco         Float
+  status        StatusVeiculo   @default(DISPONIVEL)
+  troca         String
+  sobre         String
+  usuarioId     String
+  usuario       Usuario         @relation(fields: [usuarioId], references: [id])
+  imagemUrl     ImagemVeiculo[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model Moto {
+  id            String          @id @default(uuid())
+  marca         String
+  modelo        String
+  ano           Int
+  cidade        String
+  estado        String
+  quilometragem Int
+  cor           String
+  combustivel   String
+  partida       String
+  marchas       String
+  refrigeracao  String
+  freio         String
+  estilo        String
+  alimentacao   String
+  motor         String
+  cilindrada    String
+  preco         Float
+  status        StatusVeiculo   @default(DISPONIVEL)
+  troca         String
+  sobre         String
+  usuarioId     String
+  usuario       Usuario         @relation(fields: [usuarioId], references: [id])
+  imagemUrl     ImagemVeiculo[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model Caminhao {
+  id            String          @id @default(uuid())
+  marca         String
+  modelo        String
+  ano           Int
+  cidade        String
+  estado        String
+  quilometragem Int
+  cor           String
+  combustivel   String
+  carroceria    String
+  ipva          String
+  licenciamento String
+  cabine        String
+  cambio        String
+  tracao        String
+  preco         Float
+  status        StatusVeiculo   @default(DISPONIVEL)
+  troca         String
+  sobre         String
+  usuarioId     String
+  usuario       Usuario         @relation(fields: [usuarioId], references: [id])
+  imagemUrl     ImagemVeiculo[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model Maquina {
+  id            String          @id @default(uuid())
+  marca         String
+  modelo        String
+  ano           Int
+  cidade        String
+  estado        String
+  quilometragem Int
+  cor           String
+  combustivel   String
+  tracao        String
+  cabine        String
+  motor         String
+  direcao       String
+  preco         Float
+  status        StatusVeiculo   @default(DISPONIVEL)
+  troca         String
+  sobre         String
+  usuarioId     String
+  usuario       Usuario         @relation(fields: [usuarioId], references: [id])
+  imagemUrl     ImagemVeiculo[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+enum StatusVeiculo {
+  VENDIDO
+  DISPONIVEL
+}
