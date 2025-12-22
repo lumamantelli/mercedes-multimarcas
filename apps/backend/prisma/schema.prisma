@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Usuario {
-  id        String     @id @default(uuid())
+  id        String     @id @default(uuid()) 
   email     String     @unique
   nome      String
   senha     String
@@ -26,7 +26,7 @@ model Usuario {
 }
 
 model ImagemVeiculo {
-  id         String    @id @default(uuid())
+  id         String    @id @default(uuid()) 
   url        String
   carroId    String?
   carro      Carro?    @relation(fields: [carroId], references: [id])
@@ -41,7 +41,7 @@ model ImagemVeiculo {
 }
 
 model Carro {
-  id            String          @id @default(uuid())
+  id            String          @id @default(uuid()) 
   marca         String
   modelo        String
   ano           Int
@@ -70,7 +70,7 @@ model Carro {
 }
 
 model Moto {
-  id            String          @id @default(uuid())
+  id            String          @id @default(uuid()) 
   marca         String
   modelo        String
   ano           Int
@@ -99,7 +99,7 @@ model Moto {
 }
 
 model Caminhao {
-  id            String          @id @default(uuid())
+  id            String          @id @default(uuid()) 
   marca         String
   modelo        String
   ano           Int
@@ -126,7 +126,7 @@ model Caminhao {
 }
 
 model Maquina {
-  id            String          @id @default(uuid())
+  id            String          @id @default(uuid()) 
   marca         String
   modelo        String
   ano           Int

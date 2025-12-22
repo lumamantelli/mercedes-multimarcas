@@ -20,10 +20,8 @@ import {
     FaAngleUp,
     FaArrowRightFromBracket,
     FaHouse,
-    FaMagento,
     FaRegCircleUser,
     FaBuildingColumns,
-    FaRug,
     FaUsers,
     FaShieldHalved,
 } from "react-icons/fa6";
@@ -126,19 +124,6 @@ export default function SidebarAdmin() {
                                 <SidebarMenuItem className="font-medium">
                                     <CollapsibleTrigger asChild>
                                         <SidebarMenuButton asChild>
-                                            <Link href="/superadmin/agentes">
-                                                <FaMagento className="text-[var(--vermelho)]" />
-                                                <span>Agentes</span>
-                                            </Link>
-                                        </SidebarMenuButton>
-                                    </CollapsibleTrigger>
-                                </SidebarMenuItem>
-                            </Collapsible>
-
-                            <Collapsible defaultOpen className="group/collapsible">
-                                <SidebarMenuItem className="font-medium">
-                                    <CollapsibleTrigger asChild>
-                                        <SidebarMenuButton asChild>
                                             <Link href="/superadmin/usuarios">
                                                 <FaUsers className="text-[var(--vermelho)]" />
                                                 <span>Usuários</span>
@@ -154,19 +139,6 @@ export default function SidebarAdmin() {
                                             <Link href="/superadmin/grupos">
                                                 <FaShieldHalved className="text-[var(--vermelho)]" />
                                                 <span>Grupos</span>
-                                            </Link>
-                                        </SidebarMenuButton>
-                                    </CollapsibleTrigger>
-                                </SidebarMenuItem>
-                            </Collapsible>
-
-                            <Collapsible defaultOpen className="group/collapsible">
-                                <SidebarMenuItem className="font-medium">
-                                    <CollapsibleTrigger asChild>
-                                        <SidebarMenuButton asChild>
-                                            <Link href="/superadmin/sorteios">
-                                                <FaRug className="text-[var(--vermelho)]" />
-                                                <span>Sorteios</span>
                                             </Link>
                                         </SidebarMenuButton>
                                     </CollapsibleTrigger>

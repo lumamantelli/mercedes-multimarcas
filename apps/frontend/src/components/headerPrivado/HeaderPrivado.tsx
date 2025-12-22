@@ -36,8 +36,8 @@ export function HeaderPrivado() {
                     </MenubarTrigger>
                     <MenubarContent>
                         <MenubarItem>
-                            <Link href="/login">
-                                Login <FaArrowRightToBracket />
+                            <Link href="/perfil">
+                                Perfil <FaArrowRightToBracket />
                             </Link>
                         </MenubarItem>
                     </MenubarContent>
