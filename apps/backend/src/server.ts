@@ -7,6 +7,7 @@ import caminhaoRoutes from './routes/caminhaoRoutes';
 import maquinaRoutes from './routes/maquinaRoutes';
 import usuarioRoutes from './routes/usuarioRoutes';
 import authRoutes from './routes/authRoutes';
+import searchRoutes from './routes/searchRoutes';
 import cors from 'cors';
 
 const app = express();
@@ -34,6 +35,7 @@ app.use('/api', caminhaoRoutes);
 app.use('/api', maquinaRoutes);
 app.use('/api', usuarioRoutes);
 app.use('/api', authRoutes);
+app.use('/api', searchRoutes);
 
 // Iniciar o servidor
 app.listen(PORT, () => {

@@ -2,10 +2,13 @@ import { Button } from "@/components/ui/button";
 
 
 export default function VeiculosPage() {
+
     return (
         <div className="p-4">
-            <Button className="bg-vermelho">
+            <Button className="bg-vermelho" >
+                <a href="/dashboard/veiculo-conf">
                 Novo Veículo
+                </a>
             </Button>
 
             <table className="w-full shadow-md mt-4 border-collapse border border-gray-200 rounded-md">

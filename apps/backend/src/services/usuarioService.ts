@@ -45,11 +45,13 @@ export async function listarUsuarios(): Promise<Usuario[]> {
 }
 
 export async function criarUsuario(data: CriarUsuarioInput) {
+  const senhaHashed = await bcrypt.hash(data.senha, 10);
+
   const usuario = await prisma.usuario.create({
     data: {
       email: data.email,
       nome: data.nome,
-      senha: data.senha,
+      senha: senhaHashed,
       telefone: data.telefone,
       endereco: data.endereco,
       cidade: data.cidade,
@@ -61,6 +63,11 @@ export async function criarUsuario(data: CriarUsuarioInput) {
 }
 
 export async function atualizarUsuario(id: string, data: Partial<CriarUsuarioInput>) {
+  const senhaHashed = data.senha ? await bcrypt.hash(data.senha, 10) : undefined;
+
+  if (senhaHashed) {
+    data.senha = senhaHashed;
+  }
   try {
     const usuarioAtualizado = await prisma.usuario.update({
       where: { id },

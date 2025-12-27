@@ -1,6 +1,6 @@
 "use client"
 
-import { api } from "@/lib/apis/usuarioApi";
+import { apiUser } from "@/lib/apis/usuarioApi";
 import { useState } from "react";
 import {
     Sidebar,
@@ -45,13 +45,13 @@ export default function SidebarAdmin() {
     // );
 
     const handleLogout = async () => {
-        await fetch(api.logout, {
+        await fetch(apiUser.logout, {
             method: "POST",
             credentials: "include", // ⚠️ precisa disso para enviar o cookie
         });
 
         // Opcional: redirecionar pro login
-        router.push("/entrar");
+        router.push("/login");
     };
 
     const handlePerfil = async () => {
@@ -59,7 +59,7 @@ export default function SidebarAdmin() {
     };
     return (
         <Sidebar collapsible="icon" className="bg-[var(--sidebar)] py-4 ">
-            <SidebarHeader className=" items-center h-[50px] border-b-1">
+            <SidebarHeader className=" items-center h-[45px] border-b-1">
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton

@@ -102,4 +102,15 @@ export interface Usuario {
   email: string;
 }
 
+export interface Veiculo {
+  modelo: string; 
+  marca: string; 
+  ano: number; 
+  cidade: string; 
+  estado: string; 
+  quilometragem: number; 
+  preco: number; 
+  images?: string[]
+}
+
 export type StatusVeiculo = "DISPONÍVEL" | "VENDIDO";

@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import { api } from "@/lib/apis/usuarioApi";
+import { apiUser } from "@/lib/apis/usuarioApi";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -19,34 +19,38 @@ export default function SignInPage() {
     setShowPassword(!showPassword);
   };
 
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+  setError('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
+  try {
+    const result = await fetch(apiUser.login, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, senha }),
+    });
 
-    try {
-      const result = await fetch(api.login, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, senha }),
-      });
-      if (result) {
-        // Redirecionar baseado no tipo de usuário
-        router.push(
-          '/dashboard'
-        );
-      } else {
-        setError('Email ou senha incorretos');
-      }
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Erro ao fazer login');
-    } finally {
-      setLoading(false);
+    // CORREÇÃO AQUI: Verifique se a resposta foi bem-sucedida
+    if (result.ok) {
+      // Se quiser salvar o token ou dados do usuário:
+      // const data = await result.json();
+      // localStorage.setItem('token', data.token);
+      
+      router.push('/dashboard');
+    } else {
+      // Se o status for 401, 403, 500, etc.
+      setError('Email ou senha incorretos');
     }
-  };
+  } catch (err: unknown) {
+    // Erros de rede (CORS, servidor offline) caem aqui
+    setError(err instanceof Error ? err.message : 'Erro ao conectar ao servidor');
+  } finally {
+    setLoading(false);
+  }
+};
 
   if (loading) {
     return <div>Carregando...</div>;
@@ -123,10 +127,11 @@ export default function SignInPage() {
               </div>
             </div>
           </div>
+           {error && <p className="text-red-500 mt-4">{error}</p>}
           <Button onClick={handleSubmit} type="submit" className="bg-[var(--vermelho)]">Entrar</Button>
         </form>
       </div>
-      {error && <p className="text-red-500 mt-4">{error}</p>}
+     
     </div>
   );
 }

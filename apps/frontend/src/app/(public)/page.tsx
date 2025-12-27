@@ -17,36 +17,41 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/footer/Footer";
-import { Carro } from "@/types/auth";
+import { Caminhao, Carro, Maquina, Moto } from "@/types/auth";
 import { api } from "@/lib/apis/carroApi";
-import CardCarro from "@/components/cardCarro/CardCarro";
+import CardVeiculo from "@/components/cardCarro/CardCarro";
+
+interface SearchResponse {
+  carros: Carro[];
+  motos: Moto[];
+  maquinas: Maquina[];
+  caminhoes: Caminhao[];
+  total: number;
+}
 
 export default function PublicPage() {
   const [valorBusca, setValorBusca] = useState<string>("");
-
-  const [carros, setCarros] = useState<Carro[]>([]);
-
+  const [dados, setDados] = useState<SearchResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchCarros() {
+useEffect(() => {
+    async function fetchDados() {
       try {
-        const res = await fetch(api.carros);
+        const res = await fetch(api.allItems);
         if (!res.ok) {
-          throw new Error("Erro ao buscar carros.");
+          throw new Error("Erro ao buscar dados.");
         }
-        const data = await res.json();
-      
-        setCarros(data);
+        const data: SearchResponse = await res.json();
+        setDados(data); // Agora salvamos o objeto completo
       } catch (err) {
-        console.error("Erro ao buscar carros:", err);
+        console.error("Erro ao buscar dados:", err);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchCarros();
-  }, [carros]);
+    fetchDados();
+  }, []);
 
   return (
     <div>
@@ -126,11 +131,13 @@ export default function PublicPage() {
             <span className="font-semibold text-white">Filtrar</span>
           </Button>
         </aside>
+        <div className="flex flex-col gap-4 justify-center px-4">
+
         <div className="flex w-full flex-wrap gap-4 justify-center">
-          {carros.length > 0 ? (
-            carros.map((carro) => (
+          {dados && dados.carros.length > 0 ? (
+            dados.carros.map((carro) => (
               <div key={carro.id}>
-                <CardCarro carro={carro} />
+                <CardVeiculo veiculo={carro} />
               </div>
             ))
           ) : (
@@ -138,6 +145,20 @@ export default function PublicPage() {
               {loading ? <p>Carregando...</p> : <p>Nenhum carro encontrado.</p>}
             </div>
           )}
+        </div>
+        <div className="flex w-full flex-wrap gap-4 justify-center">
+          {dados && dados.motos.length > 0 ? (
+            dados.motos.map((moto) => (
+              <div key={moto.id}>
+                <CardVeiculo veiculo={moto} />
+              </div>
+            ))
+          ) : (
+            <div className="flex items-center justify-center w-full h-full">
+              {loading ? <p>Carregando...</p> : <p>Nenhuma moto encontrado.</p>}
+            </div>
+          )}
+        </div>
         </div>
       </div>
       <Footer />

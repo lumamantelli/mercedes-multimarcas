@@ -52,27 +52,23 @@ export async function deleteUsuario(req: Request, res: Response) {
 export async function postLogin(req: Request, res: Response) {
   const { email, senha } = req.body as LoginInput;
 
-  try {
-    // Validar dados de entrada
-    if (!email || !senha) {
-      return res.status(400).json({ error: 'Email e senha são obrigatórios' });
-    }
-
-    // Fazer login
+  try{
+  // CORREÇÃO: Adicione o await aqui
     const result = await loginUsuario({ email, senha });
 
-    // Configurar cookie com o token
+    // Armazenar o token em um cookie HTTP-only (opcional, mas recomendado)
     res.cookie('authToken', result.token, {
-      httpOnly: true, // Cookie não acessível via JavaScript
-      secure: process.env.NODE_ENV === 'production', // HTTPS apenas em produção
-      sameSite: 'strict', // Proteção CSRF
-      maxAge: 4 * 60 * 60 * 1000, // 4 horas em milissegundos
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 3600000, // 1 hora
     });
 
-    // Retornar dados do usuário (sem o token no body para maior segurança)
+    // Retornar dados do usuário
     res.status(200).json({
       message: 'Login realizado com sucesso',
       usuario: result.usuario,
+      token: result.token // Certifique-se de enviar o token se o front precisar dele manualmente
     });
   } catch (error: unknown) {
     if (error instanceof Error) {

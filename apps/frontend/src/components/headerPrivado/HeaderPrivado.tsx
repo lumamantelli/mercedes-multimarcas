@@ -2,14 +2,7 @@ import * as React from "react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
-import {
-    Menubar,
-    MenubarContent,
-    MenubarItem,
-    MenubarMenu,
-    MenubarTrigger,
-} from "../ui/menubar";
-import { FaArrowRightToBracket, FaCircleUser } from "react-icons/fa6";
+
 import Image from "next/image";
 import { NavigationMenuLink } from "../ui/navigation-menu";
 import { SidebarTrigger } from "../ui/sidebar";
@@ -29,20 +22,7 @@ export function HeaderPrivado() {
                 />
             </Link>
 
-            <Menubar className="bg-transparent border-none shadow-none focus:bg-transparent ">
-                <MenubarMenu>
-                    <MenubarTrigger>
-                        <FaCircleUser className="text-vermelho active:bg-white active:rounded-full text-3xl" />
-                    </MenubarTrigger>
-                    <MenubarContent>
-                        <MenubarItem>
-                            <Link href="/perfil">
-                                Perfil <FaArrowRightToBracket />
-                            </Link>
-                        </MenubarItem>
-                    </MenubarContent>
-                </MenubarMenu>
-            </Menubar>
+         
         </header>
     );
 }
